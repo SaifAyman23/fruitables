@@ -6,7 +6,7 @@ An online store for fruits and vegetables
 ## Home:
  - configure navbar urls
  - configure search feature
- - connect the templates with the database to display products and categories
+ - connect the templates with the database to display products and categories (oil,seeds,drinks,vegetables,fruits)
  - configure discounts on products if available
  - configure footer if needed
 

@@ -109,7 +109,9 @@
                 items:4
             }
         }
+
     });
+    
 
 
     // Modal Video
@@ -147,5 +149,5 @@
         button.parent().parent().find('input').val(newVal);
     });
 
+    
 })(jQuery);
-

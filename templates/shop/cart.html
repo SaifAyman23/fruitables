@@ -3,9 +3,10 @@
 {% block content %}
 
         <!-- Cart Page Start -->
-        <div class="container-fluid py-5">
+        <div class="container-fluid py-5 mt-5">
             <div class="container py-5">
                 <div class="table-responsive">
+                    {% if cartItem %}
                     <table class="table">
                         <thead>
                           <tr>
@@ -17,7 +18,7 @@
                             <th scope="col">Handle</th>
                           </tr>
                         </thead>
-                        {% if cartItem %}
+                        
                         {% for item in cartItem %}
                         <tbody>
                             <tr>
@@ -35,33 +36,44 @@
                                 <td>
                                     <div class="input-group quantity mt-4" style="width: 100px;">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                            <i class="fa fa-minus"></i>
-                                            </button>
+                                            <a href="{% url "shop:remove_item" item.id %}">
+                                                <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                            </a>
                                         </div>
                                         <div class="form-control form-control-sm text-center border-0 bg-transparent">{{item.quantity}}</div>
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
+                                            <a href="{% url "shop:add_item" item.id %}">
+                                                <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </a>
                                         </div>
+                                        
                                     </div>
                                 </td>
                                 <td>
                                     <p class="mb-0 mt-4">{{item.total}} $</p>
                                 </td>
                                 <td>
-                                    <button class="btn btn-md rounded-circle bg-light border mt-4" >
-                                        <a href="{% url "shop:remove_cart" item.id %}"><i class="fa fa-times text-danger"></i></a>
-                                    </button>
+                                    <a href="{% url "shop:remove_cart" item.id %}">
+                                        <button class="btn btn-md rounded-circle bg-light border mt-4" >
+                                            <i class="fa fa-times text-danger"></i>
+                                        </button>
+                                    </a>
                                 </td>
                             
                             </tr>
                             {% endfor %}
                             {% else %}
-                            <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                                <h5 class="mb-0 ps-4 me-4">Total</h5>
-                                <p class="mb-0 pe-4">${{grandTotal}}</p>
+                            <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-center">
+                                <h2 class="mb-0 ps-4 me-4">No Items</h2>
+                                <a href="{% url "shop:shop" %}">
+                                    <button class="btn btn-md  bg-light border" >
+                                        Add Item
+                                    </button>
+                                </a>
                             </div>
                             {% endif %}
                         </tbody>
@@ -95,6 +107,9 @@
                                 {% if discount %}
                                     <h5 class="mb-0 ps-4 me-4">Total</h5>
                                     <p class="mb-0 pe-4"><del>${{originalTotal}}</del> ${{grandTotal}}</p>
+                                {% else %}
+                                <h5 class="mb-0 ps-4 me-4">Total</h5>
+                                <p class="mb-0 pe-4">${{grandTotal}}</p>
                                 {% endif %}
                             </div>
                             <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>

@@ -19,6 +19,7 @@
                           </tr>
                         </thead>
                         
+                        {% if cartItem %}
                         {% for item in cartItem %}
                         <tbody>
                             <tr>
@@ -66,6 +67,7 @@
                             
                             </tr>
                             {% endfor %}
+                        {% endif %}
                             {% else %}
                             <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-center">
                                 <h2 class="mb-0 ps-4 me-4">No Items</h2>

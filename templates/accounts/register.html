@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="my-lg-5 p-xxl-5">
+    <form action="{% url "accounts:register" %}" method="POST" class="my-5 p-xxl-5">
+        {{form}}
+        {% csrf_token %}
+    </form>
+</div>
+
+
+
+{% endblock content %}

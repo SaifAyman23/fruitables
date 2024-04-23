@@ -35,7 +35,7 @@ class Product(models.Model):
 #     user=
 
 class Cart(models.Model):
-    # user=models.ForeignKey(User, verbose_name=("User"), on_delete=models.CASCADE)
+    user=models.ForeignKey(User, verbose_name=("User"), on_delete=models.CASCADE,null=True)
     product=models.ForeignKey(Product, verbose_name=("Product"), on_delete=models.CASCADE)
     quantity=models.IntegerField(verbose_name=("Quantity"))
     price=models.IntegerField(verbose_name=("Price"),null=True,blank=True,)

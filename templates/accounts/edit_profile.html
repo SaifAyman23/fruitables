@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="w-100 d-flex justify-content-center align-items-center">
+
+    <form action="{% url "accounts:edit_profile" %}" method="POST" class="my-1 p-xxl-5">
+        {{userForm}}
+        {{profileForm}}
+        {% csrf_token %}
+        <div class="mt-5">
+            <input type="submit" class="form-control border-0" title="Login" style="width:400px">
+        </div>
+    </form>
+</div>
+
+
+
+{% endblock content %}

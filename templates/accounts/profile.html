@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center w-100">
+    <div class="bg-light rounded w-50">
+        
+        <div class="p-4 d-flex align-items-center justify-content-center">
+            {% if profile.image %}
+            <div class="">
+                <img src="{{profile.image.url}}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+            </div>
+            {% endif %}
+            <h1 class="display-6 mb-4">{{profile}}</h1>
+        </div>
+        <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+            <h5 class="mb-0 ps-4 me-4">Email</h5>
+            <p class="mb-0 pe-4">${{profile.user.email}}</p>
+        </div>
+        <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+            <h5 class="mb-0 ps-4 me-4">Phone Number</h5>
+            <p class="mb-0 pe-4">${{profile.phone}}</p>
+        </div>
+        
+        <a href="{% url "accounts:edit_profile" %}">
+            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Edit Profile</button>
+        </a>
+    </div>
+</div>
+
+{% endblock content %}

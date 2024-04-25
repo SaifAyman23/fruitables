@@ -7,6 +7,9 @@
     <form action="{% url "accounts:register" %}" method="POST" class="my-5 p-xxl-5">
         {{form}}
         {% csrf_token %}
+        <div class="mt-5">
+            <input type="submit" class="form-control border-0" title="Login" style="width:400px">
+        </div>
     </form>
 </div>
 

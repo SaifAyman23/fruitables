@@ -61,13 +61,13 @@ def product_details(request,product_name):
 
 def cart(request,subTotal=0,shipping=50,grandTotal=0,discount=0,originalTotal=0):
     try:
-        cartItem=Cart.objects.all().filter(user=request.user)
-        print('HIIII')
-        for item in cartItem:
-            subTotal+=item.total
-    except:
-        cartItem=None
-    try:
+        try:
+            cartItem=Cart.objects.all().filter(user=request.user)
+            print('HIIII')
+            for item in cartItem:
+                subTotal+=item.total
+        except:
+            cartItem=None
         if request.method=='POST':
             print('HIIII2')
             
@@ -125,11 +125,13 @@ def add_cart(request,product_id,cartItem=None):
     print(str('asdasdasdasd'))
     
     try:
-        cartItem=Cart.objects.get(product=product)
+        cartItem=Cart.objects.get(user=request.user,product=product)
+        print(cartItem)
     except:pass
     if cartItem:
         cartItem.quantity+=1
         cartItem.save()
+        print(cartItem," EXISTS")
     else:
         print("SAVED")
         if request.method=='POST':

@@ -2,7 +2,16 @@
 
 {% block content %}
 
-
+<style>
+    form input{
+        border-radius: 10px;
+        border:solid 1px black;
+        height:40px;
+        outline:none;
+        margin-inline-start: 2.5%;
+        margin-bottom: 2.5%;
+    }
+</style>
 <div class="w-100 d-flex justify-content-center align-items-center">
 
     <form action="{% url "accounts:edit_profile" %}" method="POST" class="my-1 p-xxl-5">

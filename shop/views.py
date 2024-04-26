@@ -4,9 +4,9 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 
 # Create your views here.
-def shop(request,cat_id=None):
+def shop(request,cat_name=None,catObj=None):
     try:
-        catObj=Category.objects.get(id=cat_id)
+        catObj=Category.objects.get(title=cat_name)
         cat=Category.objects.all()
         product=Product.objects.all().filter(category=catObj)
     except:

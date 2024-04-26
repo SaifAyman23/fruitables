@@ -161,7 +161,7 @@
                                         {% for cat in category %}
                                         <li>
                                             <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>{{cat}}</a>
+                                                <a href="{% url "shop:shop" cat.title %}"><i class="fas fa-apple-alt me-2"></i>{{cat}}</a>
                                             </div>
                                         </li>
                                         {% endfor %}

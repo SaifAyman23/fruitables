@@ -36,7 +36,6 @@ def login_view(request):
 
 def profile(request):
     profile=Profile.objects.get(user=request.user)
-    print(profile.user.password)
     return render(request,'accounts/profile.html',{'profile':profile})
 
 def logout_view(request):
@@ -49,13 +48,8 @@ def edit_profile(request):
         uForm = UserForm(request.POST,request.FILES,instance=request.user)
         pForm= ProfileForm(request.POST,request.FILES,instance=profile)
         if uForm.is_valid() and pForm.is_valid():
-            print(pForm.cleaned_data['image'])
             uForm.save()
             pForm.save()
-            print(pForm.cleaned_data['image'])
-            # profile.image=pForm.cleaned_data['image']
-            # profile.save()
-            print(profile.image,'asd')
             return redirect('accounts:profile')
         else:
             return render(request,'error.html')

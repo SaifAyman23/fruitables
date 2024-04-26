@@ -23,12 +23,9 @@ An online store for fruits and vegetables
 
 ## Cart:
  - connect the templates with the database to display products from the cart
- - configure discounts on products if available to apply on the price when confirming the purchase
  - ensure accurate total price (shipping fee and price after discount if available)
  - add the ability to type a coupon to apply a discount to a product
 
-## Contact us:
- - configure the form
 
 * Don't forget the context_processors
 

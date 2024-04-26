@@ -4,13 +4,19 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 
 # Create your views here.
-def shop(request):
-    cat=Category.objects.all()
-    product=Product.objects.all()
+def shop(request,cat_id=None):
+    try:
+        catObj=Category.objects.get(id=cat_id)
+        cat=Category.objects.all()
+        product=Product.objects.all().filter(category=catObj)
+    except:
+        cat=Category.objects.all()
+        product=Product.objects.all()
     p = Paginator(product, 6)
     page_number=request.GET.get("page")
     page_object=p.get_page(page_number)
     context={
+        'cat_obj':catObj,
         'category':cat,
         'product':page_object,
         'number':page_number
@@ -45,15 +51,33 @@ def search(request,keyword=None,category=None):
     return redirect("shop:shop")
     
 
-def product_details(request,product_name):
+def product_details(request,product_name,reviews=None):
     product=Product.objects.get(name=product_name)
     products=Product.objects.all()
     cat=Category.objects.all()
-    
+    try:
+        reviews=Reviews.objects.all().filter(product=product)
+    except:pass
+    print('here')
+    if request.method=='POST':
+        rev=request.POST['review']
+        try:
+            print('update')
+            revObj=Reviews.objects.get(user=request.user,product=product)
+            revObj.review=rev
+            revObj.save()
+            print('done')
+        except:
+            print('create')
+            review=Reviews(user=request.user,product=product,review=rev)
+            review.save()
+            print('done')
+            
     context={
         'category':cat,
         'product':product,
         'products':products,
+        'reviews':reviews
     }
     return render(request,'shop/product_details.html',context)
 

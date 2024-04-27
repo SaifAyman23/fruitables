@@ -1,10 +1,25 @@
 from django.shortcuts import render,redirect
 from .models import *
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 
 # Create your views here.
-def shop(request,cat_name=None,catObj=None):
+def shop(request):
+    
+    cat=Category.objects.all()
+    product=Product.objects.all()
+    p = Paginator(product, 6)
+    page_number=request.GET.get("page")
+    page_object=p.get_page(page_number)
+    context={
+        'category':cat,
+        'product':page_object,
+        'number':page_number
+    }
+    return render(request,'shop/shop.html',context)
+
+def shop_cats(request,cat_name=None,catObj=None):
     try:
         catObj=Category.objects.get(title=cat_name)
         cat=Category.objects.all()
@@ -34,12 +49,10 @@ def search(request,keyword=None,category=None):
                     category=Category.objects.get(Q(title__icontains=keyword))
                     products=Product.objects.order_by('-addedOn').filter(Q(description__icontains=keyword) | Q(name__icontains=keyword) | Q(category=category))
                 except:
-                    print("HEREEEEEE")
                     products=Product.objects.order_by('-addedOn').filter(Q(description__icontains=keyword) | Q(name__icontains=keyword) )
                 p = Paginator(products, 6)
                 page_number=request.GET.get("page")
                 page_object=p.get_page(page_number)
-                print(page_number)
                 context={
                     'category':cat,
                     'product':page_object,
@@ -62,16 +75,12 @@ def product_details(request,product_name,reviews=None):
     if request.method=='POST':
         rev=request.POST['review']
         try:
-            print('update')
             revObj=Reviews.objects.get(user=request.user,product=product)
             revObj.review=rev
             revObj.save()
-            print('done')
         except:
-            print('create')
             review=Reviews(user=request.user,product=product,review=rev)
             review.save()
-            print('done')
             
     context={
         'category':cat,
@@ -82,18 +91,16 @@ def product_details(request,product_name,reviews=None):
     return render(request,'shop/product_details.html',context)
 
 
-
+@login_required(login_url='accounts:login_view')
 def cart(request,subTotal=0,shipping=50,grandTotal=0,discount=0,originalTotal=0):
     try:
         try:
             cartItem=Cart.objects.all().filter(user=request.user)
-            print('HIIII')
             for item in cartItem:
                 subTotal+=item.total
         except:
             cartItem=None
         if request.method=='POST':
-            print('HIIII2')
             
             discount=request.POST['coupon']
             if discount:
@@ -144,9 +151,9 @@ def remove_item(request,item_id):
         cartItem.delete()
     return redirect('shop:cart')
 
+@login_required(login_url='accounts:login_view')
 def add_cart(request,product_id,cartItem=None):
     product=Product.objects.get(id=product_id)
-    print(str('asdasdasdasd'))
     
     try:
         cartItem=Cart.objects.get(user=request.user,product=product)
@@ -155,17 +162,12 @@ def add_cart(request,product_id,cartItem=None):
     if cartItem:
         cartItem.quantity+=1
         cartItem.save()
-        print(cartItem," EXISTS")
     else:
-        print("SAVED")
         if request.method=='POST':
-            print("SAVED2")
             amount=int(request.POST["quantity"])
-            print(amount)
             if amount:
                 cartItem=Cart(user=request.user,product=product,quantity=amount)
                 cartItem.save()
         else:
-            print('HEREEEEEEE')
             return redirect("shop:product_details")
     return redirect("shop:cart")

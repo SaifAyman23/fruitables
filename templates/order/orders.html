@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+        <!-- Cart Page Start -->
+        <div class="container-fluid py-5 mt-5">
+            <div class="container py-5">
+                <div class="table-responsive">
+                    <table class="table">
+                        {% if orders %}
+                        {% for item in orders %}
+                        <thead>
+                            <tr>
+                              <th>
+                                   <div class="bg-light rounded">
+                                      <div class="p-4">
+                                          <div class="d-flex justify-content-between mb-4">
+                                            <h1 class="display-6 mb-4">Order</h1>
+                                            {% comment %}  {% endcomment %}
+                                            <button class="btn btn-md bg-danger border-0 mb-4" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="color:white;font-size:15px;">
+                                                Cancel
+                                            </button>
+                                            {% comment %} </a> {% endcomment %}
+                                          </div>  
+                                          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h5 class="modal-title" id="staticBackdropLabel">Cancel Order</h5>
+                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                  Are you sure you to cancel this order?
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                  <a href="{% url "order:cancel" item.id %}" >
+                                                    <button type="button" class="btn btn-primary">Yes</button>
+                                                  </a>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          
+                                          <div class="d-flex justify-content-between mb-4">
+                                              <h5 class="mb-0 me-4">Name:</h5>
+                                              <p class="mb-0 me-5">{{item.first_name}} {{item.last_name}}</p>
+                                              <h5 class="mb-0 me-4">Phone:</h5>
+                                              <p class="mb-0 me-5">{{item.phone}}</p>
+                                              <h5 class="mb-0 me-4">Email:</h5>
+                                              <p class="mb-0 me-5">{{item.email}}</p>
+                                              <h5 class="mb-0 me-4">City:</h5>
+                                              <p class="mb-0 me-5">{{item.city}}</p>
+                                              <h5 class="mb-0 me-4">Country:</h5>
+                                              <p class="mb-0 me-5">{{item.country}}</p>
+                                          </div>
+                                          <div class="d-flex justify-content-between mb-4">
+                                                <h5 class="mb-0 me-4">Address 1:</h5>
+                                                <p class="mb-0">{{item.address1}}</p>
+                                                <h5 class="mb-0 me-4">Address 2:</h5>
+                                                <p class="mb-0 me-5">{{item.address2}}</p>
+                                          </div>
+                                          <div class="d-flex justify-content-start mb-4">
+                                              <h5 class="mb-0 me-4">Total:</h5>
+                                              <p class="mb-0">${{item.order_total}}</p>
+                                            </div>
+                                            <div class="d-flex justify-content-start mb-4">
+                                                <h5 class="mb-0 me-4">Shipping:</h5>
+                                                <p class="mb-0 me-5">${{item.shipping}}</p>
+                                          </div>
+                                          {% comment %} <div class="d-flex justify-content-between">
+                                              <h5 class="mb-0 me-4">Shipping</h5>
+                                              <div class="">
+                                                  <p class="mb-0">Flat rate: ${{shipping}}</p>
+                                              </div>
+                                          </div> {% endcomment %}
+                                      </div>
+                                  </div>
+                              </tr>
+                          </thead>
+                        {% endfor %}
+                            {% else %}
+                            <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-center">
+                                <h2 class="mb-0 ps-4 me-4">No Orders</h2>
+                            </div>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Cart Page End -->
+
+
+{% endblock content %}

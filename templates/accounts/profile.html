@@ -12,8 +12,8 @@
             {% endif %}
             <h1 class="display-6 mb-4 me-5">{{profile}}</h1>
             
-            <a href="{% url "accounts:logout" %}" class="my-auto">
-                <i class="fas fa-door-open fa-3x ms-3"></i>
+            <a href="{% url "order:orders" %}" class="my-auto " data-bs-toggle="tooltip" data-bs-placement="top">
+                <i class="fas fa-receipt fa-3x ms-3"></i>
             </a>
         </div>
         <div class="py-4 mb-4 border-top d-flex justify-content-between">

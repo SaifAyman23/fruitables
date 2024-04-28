@@ -1,7 +1,18 @@
 from django.shortcuts import redirect, render
-from shop.models import *
+from .models import *
 
 # Create your views here.
+
+def orders(request,orders=None):
+    try:
+        orders=Order.objects.all().filter(user=request.user)
+    except:
+        pass
+    context={
+        'orders':orders,
+    }
+    return render(request,'order/orders.html',context)
+
 def checkout(request,subTotal=0,shipping=0):
     try:
         cartItems=Cart.objects.all().filter(user=request.user)
@@ -73,3 +84,7 @@ def checkout(request,subTotal=0,shipping=0):
         }
         return render(request,'order/chackout_page.html',context)
     return render("shop:cart")
+
+def cancel_order(request,order_id):
+    Order.objects.get(id=order_id).delete()
+    return redirect('order:orders')

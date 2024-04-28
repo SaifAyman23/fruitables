@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from .forms import *
-from shop.models import Order
+from order.models import Order
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 
@@ -54,11 +54,12 @@ def logout_view(request):
 def edit_profile(request):
     profile=Profile.objects.get(user=request.user)
     if request.method=="POST":
-        uForm = UserForm(request.POST,request.FILES,instance=request.user)
+        uForm = UserForm(request.POST,instance=request.user)
         pForm= ProfileForm(request.POST,request.FILES,instance=profile)
         if uForm.is_valid() and pForm.is_valid():
             uForm.save()
             pForm.save()
+            print("SAVED")
             return redirect('accounts:profile')
         else:
             return render(request,'error.html')

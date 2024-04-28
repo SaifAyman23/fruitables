@@ -30,10 +30,15 @@ class Order(models.Model):
     city = models.CharField( max_length=150)
     country = models.CharField( max_length=150,null=True)
     order_total = models.FloatField()
+    grand_total = models.FloatField(null=True,blank=True)
     shipping = models.FloatField(default=50)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    def save(self,*args, **kwargs):
+        self.grand_total=self.order_total+self.shipping
+        super(Order,self).save(*args, **kwargs)
     
     def __str__(self) -> str:
         return f'Order {self.id}'

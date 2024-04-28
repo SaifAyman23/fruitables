@@ -78,7 +78,7 @@ def checkout(request,subTotal=0,shipping=0):
                     orderProduct.save()
                     item.delete()
             
-            return redirect('home:home')
+            return redirect('order:orders')
         context={
             'cartItems':cartItems,
             'subTotal':subTotal,

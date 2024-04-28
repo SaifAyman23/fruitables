@@ -3,13 +3,15 @@ from .models import *
 
 # Create your views here.
 
-def orders(request,orders=None):
+def orders(request,orders=None,order_products=None):
     try:
         orders=Order.objects.all().filter(user=request.user)
+        order_products=OrderProduct.objects.all().filter(user=request.user)
     except:
         pass
     context={
         'orders':orders,
+        'order_products':order_products,
     }
     return render(request,'order/orders.html',context)
 

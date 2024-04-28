@@ -36,4 +36,4 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self) -> str:
-        return f'{self.email}'
+        return f'Order {self.id}'

@@ -4,13 +4,13 @@
 <div class="d-flex justify-content-center align-items-center w-100">
     <div class="bg-light rounded w-50">
         
-        <div class="p-4 d-flex align-items-center justify-content-center">
+        <div class="p-4 d-flex align-items-center justify-content-between">
             {% if profile.image %}
-            <div class="me-5">
+            <div class="">
                 <img src="{{profile.image.url}}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
             </div>
             {% endif %}
-            <h1 class="display-6 mb-4 me-5">{{profile}}</h1>
+            <h1 class="display-6">{{profile}}</h1>
             
             <a href="{% url "order:orders" %}" class="my-auto " data-bs-toggle="tooltip" data-bs-placement="top">
                 <i class="fas fa-receipt fa-3x ms-3"></i>

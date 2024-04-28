@@ -59,7 +59,6 @@ def edit_profile(request):
         if uForm.is_valid() and pForm.is_valid():
             uForm.save()
             pForm.save()
-            print("SAVED")
             return redirect('accounts:profile')
         else:
             return render(request,'error.html')

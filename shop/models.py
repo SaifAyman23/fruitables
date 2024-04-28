@@ -20,8 +20,15 @@ class Category(models.Model):
     def __str__(self) -> str:
         return str(self.title).capitalize()
     
+class Offer(models.Model):
+    title=models.CharField(verbose_name=("Title"),max_length=50)
+    ratio=models.IntegerField(verbose_name=("Ratio"))
+    created_at=models.DateField(verbose_name=("Created at"), auto_now=True)
+    expiry_date=models.DateField(verbose_name=("Expires at"),null=True)
+    is_available=models.BooleanField(verbose_name=("Is Available"),default=True)
     
-
+    def __str__(self):
+        return str(self.title)
 
 class Product(models.Model):
     name = models.CharField(verbose_name='Product Name',unique=True ,max_length=50)
@@ -31,13 +38,17 @@ class Product(models.Model):
     addedOn = models.DateField(verbose_name='Addition Date' ,auto_now=True)
     images = models.ImageField(verbose_name='Image' ,upload_to=image_upload,null=True)
     category = models.ForeignKey(Category,verbose_name='Category' , on_delete=models.CASCADE)
+    offer = models.ForeignKey(Offer,verbose_name="Offer",on_delete=models.PROTECT,null=True)
+    offer_price = models.IntegerField(verbose_name=("Offer Price"),null=True,blank=True)
+    
+    def save(self,*args, **kwargs):
+        if self.offer:
+            self.offer_price=self.price-((self.offer.ratio/100)*self.price)
+        super(Product,self).save(*args, **kwargs)
     
     def __str__(self) -> str:
         return str(self.name).capitalize()
     
-
-# class Review(models.Model):
-#     user=
 
 class Cart(models.Model):
     user=models.ForeignKey(User, verbose_name=("User"), on_delete=models.CASCADE,null=True)
@@ -51,7 +62,10 @@ class Cart(models.Model):
         verbose_name_plural = ("Carts")
         
     def save(self,*args,**kwargs):
-        self.price=self.product.price
+        if self.product.offer_price:
+            self.price=self.product.offer_price
+        else:
+            self.price=self.product.price
         self.total=self.quantity*self.price
         super(Cart,self).save(*args, **kwargs)
 

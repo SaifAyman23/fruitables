@@ -201,7 +201,7 @@ def checkout(request,subTotal=0,shipping=0):
                     country=country,
                 )
                 orderObj=OrderProduct.objects.get
-                order.order_total+=subTotal-shipping
+                order.order_total+=subTotal
                 order.save()
             except:
                 order=Order(

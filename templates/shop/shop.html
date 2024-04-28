@@ -176,7 +176,13 @@
                                         <h4>{{pro}}</h4>
                                         <p>{{pro.description}}</p>
                                         <div class="d-flex justify-content-between flex-lg-wrap">
+                                            {% if pro.offer_price %}
+                                            <p class="text-dark fs-5 fw-bold mb-0"><del>${{pro.price}} / kg</del></p>
+                                            <p class="text-dark fs-5 fw-bold mb-0">${{pro.offer_price}} / kg</p>
+                                            {% else %}
+
                                             <p class="text-dark fs-5 fw-bold mb-0">${{pro.price}} / kg</p>
+                                            {% endif %}
                                             <a href="{% url "shop:product_details" pro.name %}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                                         </div>
                                     </div>

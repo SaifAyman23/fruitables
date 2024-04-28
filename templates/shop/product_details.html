@@ -29,7 +29,12 @@
                             <div class="col-lg-6">
                                 <h4 class="fw-bold mb-3">{{product}}</h4>
                                 <p class="mb-3">Category: {{product.category}}</p>
+                                {% if product.offer_price %}
+                                <h5 class="fw-bold mb-3"><del>{{product.price}} $</del></h5>
+                                <h5 class="fw-bold mb-3">{{product.offer_price}} $</h5>
+                                {% else %}
                                 <h5 class="fw-bold mb-3">{{product.price}} $</h5>
+                                {% endif %}
                                 <p class="mb-4">{{product.description}}</p>
                                 <div class="input-group quantity mb-5" style="width: 100px;">
                                     
@@ -312,7 +317,12 @@
                                 <h4>{{item}}</h4>
                                 <p>{{item.description}}</p>
                                 <div class="d-flex justify-content-between flex-lg-wrap">
+                                    {% if item.offer %}
+                                    <p class="text-dark fs-5 fw-bold"><del>${{item.price}}</del> / kg</p>
+                                    <p class="text-dark fs-5 fw-bold">${{item.offer_price}} / kg</p>
+                                    {% else %}
                                     <p class="text-dark fs-5 fw-bold">${{item.price}} / kg</p>
+                                    {% endif %}
                                     <a href="{% url "shop:product_details" item.name %}" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                                 </div>
                             </div>

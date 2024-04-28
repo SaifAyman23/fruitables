@@ -114,7 +114,7 @@
                                 <p class="mb-0 pe-4">${{grandTotal}}</p>
                                 {% endif %}
                             </div>
-                            <a href="{% url "shop:checkout" subTotal shipping %}" style="text-decoration:none">
+                            <a href="{% url "order:checkout" subTotal shipping %}" style="text-decoration:none">
                                 <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
                             </a>
                         </div>

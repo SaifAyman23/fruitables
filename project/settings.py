@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'home','shop','accounts','api',
     'rest_framework',
     'rest_framework.authtoken',
+    'order',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

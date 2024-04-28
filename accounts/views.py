@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from .forms import *
+from shop.models import Order
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 
@@ -34,9 +35,17 @@ def login_view(request):
             return render(request,'error.html')
     return render(request,'accounts/login.html')
 
-def profile(request):
+def profile(request,order=None):
     profile=Profile.objects.get(user=request.user)
-    return render(request,'accounts/profile.html',{'profile':profile})
+    try:
+        order=Order.objects.all().filter(user=request.user)
+    except:
+        pass
+    context={
+        'profile':profile,
+        'order':order,
+    }
+    return render(request,'accounts/profile.html',context)
 
 def logout_view(request):
     logout(request)

@@ -6,11 +6,15 @@
         
         <div class="p-4 d-flex align-items-center justify-content-center">
             {% if profile.image %}
-            <div class="">
+            <div class="me-5">
                 <img src="{{profile.image.url}}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
             </div>
             {% endif %}
-            <h1 class="display-6 mb-4">{{profile}}</h1>
+            <h1 class="display-6 mb-4 me-5">{{profile}}</h1>
+            
+            <a href="{% url "accounts:logout" %}" class="my-auto">
+                <i class="fas fa-door-open fa-3x ms-3"></i>
+            </a>
         </div>
         <div class="py-4 mb-4 border-top d-flex justify-content-between">
             <h5 class="mb-0 ps-4 me-4">Email</h5>

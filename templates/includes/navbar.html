@@ -71,8 +71,10 @@
                 <div class="input-group w-75 mx-auto d-flex">
                     <form action="{% url "shop:search" %}" method="POST">
                         {% csrf_token %}
-                        <input type="search" class="form-control p-3" placeholder="keywords" name="keyword" aria-describedby="search-icon-1">
-                        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                        <div class="d-flex align-items-center">
+                            <input type="search" class="form-control p-3" placeholder="keywords" name="keyword" aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
                     </form>
                 </div>
             </div>

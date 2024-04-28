@@ -27,7 +27,5 @@ An online store for fruits and vegetables
  - add the ability to type a coupon to apply a discount to a product
 
 
-* Don't forget the context_processors
-
 ** Next is API
 

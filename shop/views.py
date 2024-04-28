@@ -172,7 +172,7 @@ def add_cart(request,product_id,cartItem=None):
             return redirect("shop:product_details")
     return redirect("shop:cart")
 
-def checkout(request,grandTotal=0):
+def checkout(request,subTotal=0,shipping=0):
     try:
         cartItems=Cart.objects.all().filter(user=request.user)
     except:pass
@@ -185,6 +185,7 @@ def checkout(request,grandTotal=0):
             phone = request.POST['phone']
             address1 = request.POST['address1']
             address2 = request.POST['address2']
+            address2 = address2 if address2 else 'None'
             city = request.POST['city']
             country = request.POST['country']
             try:
@@ -198,8 +199,10 @@ def checkout(request,grandTotal=0):
                     address2=address2,
                     city=city,
                     country=country,
-                    order_total=grandTotal
                 )
+                orderObj=OrderProduct.objects.get
+                order.order_total+=subTotal-shipping
+                order.save()
             except:
                 order=Order(
                     user=request.user,
@@ -208,27 +211,36 @@ def checkout(request,grandTotal=0):
                     email=email,
                     phone=phone,
                     address1=address1,
-                    address2=address2 if address2 else 'None',
+                    address2=address2,
                     city=city,
                     country=country,
-                    order_total=grandTotal
+                    order_total=subTotal,
+                    shipping=shipping
                 )
+                order.save()
                 
-            order.save()
             for item in cartItems:
-                orderProduct=OrderProduct()
-                orderProduct.user=request.user
-                orderProduct.order=order
-                orderProduct.product=item.product
-                orderProduct.product_price=item.total
-                orderProduct.quantity=item.quantity
-                orderProduct.save()
-                item.delete()
+                try:
+                    orderProduct=OrderProduct.objects.get(user=request.user,order=order,product=item.product)
+                    orderProduct.quantity+=item.quantity
+                    orderProduct.product_price+=item.total
+                    orderProduct.save()
+                    item.delete()
+                except:
+                    orderProduct=OrderProduct()
+                    orderProduct.user=request.user
+                    orderProduct.order=order
+                    orderProduct.product=item.product
+                    orderProduct.product_price=item.total
+                    orderProduct.quantity=item.quantity
+                    orderProduct.save()
+                    item.delete()
             
             return redirect('home:home')
         context={
             'cartItems':cartItems,
-            'grandTotal':grandTotal,
+            'subTotal':subTotal,
+            'shipping':shipping
         }
         return render(request,'shop/chackout_page.html',context)
     return render("shop:cart")

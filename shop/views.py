@@ -67,6 +67,7 @@ def search(request,keyword=None,category=None):
 def product_details(request,product_name,reviews=None):
     product=Product.objects.get(name=product_name)
     products=Product.objects.all()
+    
     cat=Category.objects.all()
     try:
         reviews=Reviews.objects.all().filter(product=product)

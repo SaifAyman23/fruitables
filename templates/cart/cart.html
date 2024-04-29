@@ -45,12 +45,15 @@
                                         </div>
                                         <div class="form-control form-control-sm text-center border-0 bg-transparent">{{item.quantity}}</div>
                                         <div class="input-group-btn">
+                                            {% if item.quantity != item.product.stock %}
                                             <a href="{% url "cart:add_item" item.id %}">
                                                 <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
                                                     <i class="fa fa-plus"></i>
                                                 </button>
                                             </a>
+                                            {% endif %}
                                         </div>
+
                                         
                                     </div>
                                 </td>

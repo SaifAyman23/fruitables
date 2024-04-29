@@ -64,13 +64,11 @@ def checkout(request,subTotal=0,shipping=0):
                 order.save()
                 
             for item in cartItems:
+                product=Product.objects.get(name=item.product)
                 try:
                     orderProduct=OrderProduct.objects.get(user=request.user,order=order,product=item.product)
                     orderProduct.quantity+=item.quantity
                     orderProduct.product_price+=item.total
-                    orderProduct.save()
-                    
-                    item.delete()
                 except:
                     orderProduct=OrderProduct()
                     orderProduct.user=request.user
@@ -78,8 +76,11 @@ def checkout(request,subTotal=0,shipping=0):
                     orderProduct.product=item.product
                     orderProduct.product_price=item.total
                     orderProduct.quantity=item.quantity
-                    orderProduct.save()
-                    item.delete()
+                product.stock-=item.quantity
+                product.save()
+                orderProduct.save()
+                item.delete()
+                
 
             return redirect('order:orders')
         context={
@@ -91,7 +92,14 @@ def checkout(request,subTotal=0,shipping=0):
     return render("shop:cart")
 
 def cancel_order(request,order_id):
-    Order.objects.get(id=order_id).delete()
+    order=Order.objects.get(id=order_id)
+    order_product=OrderProduct.objects.all().filter(order=order)
+    for product in order_product:
+        pro=Product.objects.get(name=product.product)
+        pro.stock+=product.quantity
+        pro.save()
+    order.delete()
+    
     return redirect('order:orders')
 
 def approve_order(request,order_id):

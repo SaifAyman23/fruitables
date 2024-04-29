@@ -47,7 +47,7 @@ class Product(models.Model):
         super(Product,self).save(*args, **kwargs)
     
     def __str__(self) -> str:
-        return str(self.name).capitalize()
+        return str(self.name)
 
 class Reviews(models.Model):
     user=models.ForeignKey(User, verbose_name=("User"), on_delete=models.CASCADE)

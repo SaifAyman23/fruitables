@@ -50,6 +50,49 @@
                                               </div>
                                             </div>
                                           </div>
+                                          <div class="modal fade" id="modal{{item.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                              <div class="modal-content">
+                                                <div class="modal-body">
+                                                  <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                              <th scope="col">Product</th>
+                                                              <th scope="col">Name</th>
+                                                              <th scope="col">Price</th>
+                                                              <th scope="col">Quantity</th>
+                                                            </tr>
+                                                          </thead>
+      
+                                                          {% for pro in order_products %}
+                                                          {% if pro.order == item %}
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th scope="row">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <img src="{{pro.product.images.url}}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                                                        </div>
+                                                                    </th>
+                                                                    <td>
+                                                                        <p class="mb-0 mt-4">{{pro.product}}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p class="mb-0 mt-4 px-2">{{pro.product_price}} $</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-control mt-4 form-control-sm text-center border-0 bg-transparent">{{pro.quantity}}</div>
+                                                                    </td>
+                                                                </tr>
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                            
+                                                    </table>
+                                                </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
                                           
                                           <div class="d-flex justify-content-between mb-4">
                                               <h5 class="mb-0 me-4">Name:</h5>
@@ -69,60 +112,63 @@
                                                 <h5 class="mb-0 me-4">Address 2:</h5>
                                                 <p class="mb-0 me-5">{{item.address2}}</p>
                                           </div>
-                                          {% comment %} <hr> {% endcomment %}
-                                          
-                                            <hr>
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                          <th scope="col">Product</th>
-                                                          <th scope="col">Name</th>
-                                                          <th scope="col">Price</th>
-                                                          <th scope="col">Quantity</th>
-                                                        </tr>
-                                                      </thead>
+                                          <hr>
+                                          {% comment %} <div class="table-responsive">
+                                              <table class="table">
+                                                  <thead>
+                                                      <tr>
+                                                        <th scope="col">Product</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Price</th>
+                                                        <th scope="col">Quantity</th>
+                                                      </tr>
+                                                    </thead>
 
-                                                      {% for pro in order_products %}
-                                                      {% if pro.order == item %}
-                                                        <tbody>
-                                                            <tr>
-                                                                <th scope="row">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <img src="{{pro.product.images.url}}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
-                                                                    </div>
-                                                                </th>
-                                                                <td>
-                                                                    <p class="mb-0 mt-4">{{pro.product}}</p>
-                                                                </td>
-                                                                <td>
-                                                                    <p class="mb-0 mt-4 px-2">{{pro.product_price}} $</p>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="form-control mt-4 form-control-sm text-center border-0 bg-transparent">{{pro.quantity}}</div>
-                                                                </td>
-                                                            </tr>
-                                                        {% endif %}
-                                                        {% endfor %}
-                                                        
-                                                </table>
+                                                    {% for pro in order_products %}
+                                                    {% if pro.order == item %}
+                                                      <tbody>
+                                                          <tr>
+                                                              <th scope="row">
+                                                                  <div class="d-flex align-items-center">
+                                                                      <img src="{{pro.product.images.url}}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                                                  </div>
+                                                              </th>
+                                                              <td>
+                                                                  <p class="mb-0 mt-4">{{pro.product}}</p>
+                                                              </td>
+                                                              <td>
+                                                                  <p class="mb-0 mt-4 px-2">{{pro.product_price}} $</p>
+                                                              </td>
+                                                              <td>
+                                                                  <div class="form-control mt-4 form-control-sm text-center border-0 bg-transparent">{{pro.quantity}}</div>
+                                                              </td>
+                                                          </tr>
+                                                      {% endif %}
+                                                      {% endfor %}
+                                                      
+                                              </table>
+                                          </div> {% endcomment %}
+                                          <div class="d-flex justify-content-start mb-4">
+                                              <h5 class="mb-0 me-4">Subtotal:</h5>
+                                              <p class="mb-0">${{item.order_total}}</p>
                                             </div>
-                                            <div class="d-flex justify-content-start mb-4">
-                                                <h5 class="mb-0 me-4">Subtotal:</h5>
-                                                <p class="mb-0">${{item.order_total}}</p>
-                                              </div>
-                                              <div class="d-flex justify-content-between mb-4">
-                                                  <div class="d-flex justify-content-start">
-                                                      <h5 class="mb-0 me-4">Shipping:</h5>
-                                                      <p class="mb-0 me-5">${{item.shipping}}</p>
-                                                  </div>
-                                              </div>
-                                              <div class="d-flex justify-content-between">
-                                                  <div class="d-flex justify-content-start">
-                                                      <h5 class="mb-0 me-4">Grand Total:</h5>
-                                                      <p class="mb-0 me-5">${{item.grand_total}}</p>
-                                                  </div>
-                                              </div>
+                                            <div class="d-flex justify-content-between mb-4">
+                                                <div class="d-flex justify-content-start">
+                                                    <h5 class="mb-0 me-4">Shipping:</h5>
+                                                    <p class="mb-0 me-5">${{item.shipping}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <div class="d-flex justify-content-start">
+                                                    <h5 class="mb-0 me-4">Grand Total:</h5>
+                                                    <p class="mb-0 me-5">${{item.grand_total}}</p>
+                                                </div>
+                                                <div class="d-flex justify-content-start">
+                                                    <button class="btn border-0 p-2" type="button" data-bs-toggle="modal" data-bs-target="#modal{{item.id}}" style="color:white;font-size:19px;">
+                                                      <h5 class="mb-0 me-4">Products</h5>
+                                                    </button>
+                                                </div>
+                                            </div>
                                       </div>
                                   </div>
                               </tr>

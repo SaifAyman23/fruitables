@@ -74,6 +74,7 @@ def checkout(request,subTotal=0,shipping=0):
                     orderProduct.user=request.user
                     orderProduct.order=order
                     orderProduct.product=item.product
+                    
                     orderProduct.product_price=item.total
                     orderProduct.quantity=item.quantity
                     orderProduct.save()

@@ -3,23 +3,48 @@ from .models import *
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
+import reportlab
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
 
 # Create your views here.
 def shop(request):
-    
     cat=Category.objects.all()
-    product=Product.objects.all().order_by('-offer')
+    product=Product.objects.all().filter(stock__gt=0).order_by('-offer')
+    products=Product.objects.all().order_by('-offer')
     p = Paginator(product, 6)
     page_number=request.GET.get("page")
     page_object=p.get_page(page_number)
     context={
         'category':cat,
+        'products':products,
         'product':page_object,
-        'number':page_number
+        'number':page_number,
     }
     return render(request,'shop/shop.html',context)
 
-def shop_cats(request,cat_name=None,catObj=None):
+def shop_price(request):
+    if request.method=="POST":
+        prices=request.POST['amount']
+        cat=Category.objects.all()
+        product=Product.objects.all().filter(price__lte=prices)
+        products=Product.objects.all().order_by('-offer')
+        p = Paginator(product, 6)
+        page_number=request.GET.get("page")
+        page_object=p.get_page(page_number)
+        context={
+            'category':cat,
+            'products':products,
+            'product':product,
+            'number':page_number,
+        }
+        return render(request,'shop/shop.html',context)
+    
+    return redirect('shop:shop')
+
+def shop_cats(request,cat_name=None,catObj=None,product=None):
+    products=Product.objects.all().order_by('-offer')
     try:
         catObj=Category.objects.get(title=cat_name)
         cat=Category.objects.all()
@@ -33,16 +58,17 @@ def shop_cats(request,cat_name=None,catObj=None):
     context={
         'cat_obj':catObj,
         'category':cat,
+        'products':products,
         'product':page_object,
         'number':page_number
     }
     return render(request,'shop/shop.html',context)
 
 def search(request,keyword=None,category=None):
+    product=Product.objects.all().order_by('-offer')
     if request.method == "POST":
         keyword=request.POST["keyword"]
         if keyword:
-            print(keyword)
             cat=Category.objects.all()
             try:    
                 try:
@@ -57,11 +83,13 @@ def search(request,keyword=None,category=None):
                     'category':cat,
                     'product':page_object,
                     'number':page_number,
+                    'products':product,
                 }
                 return render(request,'shop/shop.html',context)
             except:pass
         
     return redirect("shop:shop")
+        
     
 
 def product_details(request,product_name,reviews=None):
@@ -72,7 +100,6 @@ def product_details(request,product_name,reviews=None):
     try:
         reviews=Reviews.objects.all().filter(product=product)
     except:pass
-    print('here')
     if request.method=='POST':
         rev=request.POST['review']
         try:
@@ -158,7 +185,6 @@ def add_cart(request,product_id,cartItem=None):
     
     try:
         cartItem=Cart.objects.get(user=request.user,product=product)
-        print(cartItem)
     except:pass
     if cartItem:
         cartItem.quantity+=1
@@ -172,3 +198,4 @@ def add_cart(request,product_id,cartItem=None):
         else:
             return redirect("shop:product_details")
     return redirect("shop:cart")
+

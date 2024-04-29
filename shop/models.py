@@ -36,12 +36,14 @@ class Product(models.Model):
     addedOn = models.DateField(verbose_name='Addition Date' ,auto_now=True)
     images = models.ImageField(verbose_name='Image' ,upload_to=image_upload,null=True)
     category = models.ForeignKey(Category,verbose_name='Category' , on_delete=models.CASCADE)
-    offer = models.ForeignKey(Offer,verbose_name="Offer",on_delete=models.PROTECT,null=True)
+    offer = models.ForeignKey(Offer,verbose_name="Offer",on_delete=models.PROTECT,null=True,blank=True)
     offer_price = models.IntegerField(verbose_name=("Offer Price"),null=True,blank=True)
     
     def save(self,*args, **kwargs):
         if self.offer:
             self.offer_price=self.price-((self.offer.ratio/100)*self.price)
+        if self.stock <0:
+            self.stock=0
         super(Product,self).save(*args, **kwargs)
     
     def __str__(self) -> str:

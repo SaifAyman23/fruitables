@@ -32,7 +32,7 @@ class Order(models.Model):
     order_total = models.FloatField()
     grand_total = models.FloatField(null=True,blank=True)
     shipping = models.FloatField(default=50)
-    is_active = models.BooleanField(default=True)
+    is_approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -41,4 +41,4 @@ class Order(models.Model):
         super(Order,self).save(*args, **kwargs)
     
     def __str__(self) -> str:
-        return f'Order {self.id}'
+        return f'{self.first_name}'

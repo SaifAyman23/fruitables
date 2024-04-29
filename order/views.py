@@ -42,6 +42,7 @@ def checkout(request,subTotal=0,shipping=0):
                     address2=address2,
                     city=city,
                     country=country,
+                    is_approved=False,
                 )
                 order.order_total+=subTotal
                 order.save()
@@ -57,7 +58,7 @@ def checkout(request,subTotal=0,shipping=0):
                     city=city,
                     country=country,
                     order_total=subTotal,
-                    shipping=shipping
+                    shipping=shipping,
                 )
                 order.save()
                 
@@ -89,4 +90,10 @@ def checkout(request,subTotal=0,shipping=0):
 
 def cancel_order(request,order_id):
     Order.objects.get(id=order_id).delete()
+    return redirect('order:orders')
+
+def approve_order(request,order_id):
+    order=Order.objects.get(id=order_id)
+    order.is_approved=True
+    order.save()
     return redirect('order:orders')

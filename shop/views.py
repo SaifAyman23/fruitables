@@ -8,7 +8,7 @@ from django.db.models import Q
 def shop(request):
     
     cat=Category.objects.all()
-    product=Product.objects.all()
+    product=Product.objects.all().order_by('-offer')
     p = Paginator(product, 6)
     page_number=request.GET.get("page")
     page_object=p.get_page(page_number)

@@ -15,12 +15,23 @@
                                    <div class="bg-light rounded">
                                       <div class="p-4">
                                           <div class="d-flex justify-content-between mb-4">
-                                            <h1 class="display-6 mb-4">{{item}}</h1>
-                                            <button class="btn btn-md bg-danger border-0 mb-4 p-2" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="color:white;font-size:15px;">
+                                            <h1 class="display-6 mb-4">{{item}} {{item.id}}</h1>
+                                            <div class="d-flex justify-content-between mb-4">
+                                              {% if item.is_approved %}
+                                              <h5 class="mb-0 me-4">Approved</h5>
+                                              {% else %}
+                                              <button class="btn btn-md bg-danger border-0 mb-4 p-2" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{item.id}}" style="color:white;font-size:19px;">
                                                 Cancel
-                                            </button>
+                                              </button>
+                                              <a href="{% url "order:approve" item.id %}" >
+                                                <button class="btn btn-md bg-success border-0 ms-4 mb-4 p-2" type="button" style="color:white;font-size:19px;">
+                                                  Approve
+                                                </button>
+                                              </a>
+                                              {% endif %}
+                                            </div>  
                                           </div>  
-                                          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                          <div class="modal fade" id="staticBackdrop{{item.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                               <div class="modal-content">
                                                 <div class="modal-header">

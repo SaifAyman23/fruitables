@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from .models import *
+from cart.models import *
 
 # Create your views here.
 
@@ -68,18 +69,18 @@ def checkout(request,subTotal=0,shipping=0):
                     orderProduct.quantity+=item.quantity
                     orderProduct.product_price+=item.total
                     orderProduct.save()
+                    
                     item.delete()
                 except:
                     orderProduct=OrderProduct()
                     orderProduct.user=request.user
                     orderProduct.order=order
                     orderProduct.product=item.product
-                    
                     orderProduct.product_price=item.total
                     orderProduct.quantity=item.quantity
                     orderProduct.save()
                     item.delete()
-            
+
             return redirect('order:orders')
         context={
             'cartItems':cartItems,

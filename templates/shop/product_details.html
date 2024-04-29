@@ -38,7 +38,7 @@
                                 <p class="mb-4">{{product.description}}</p>
                                 <div class="input-group quantity mb-5" style="width: 100px;">
                                     
-                                    <form action="{% url "shop:add_cart" product.id %}" method="POST">
+                                    <form action="{% url "cart:add_cart" product.id %}" method="POST">
                                         {% csrf_token %}
                                         <input type="number" name="quantity" class="form-control form-control-sm text-center border-0" value="1">
                                         {% comment %} <a href="{% url "shop:add_cart" product.id %}" class="btn border border-secondary rounded-pill px-4 py-2 my-4 text-primary"> {% endcomment %}

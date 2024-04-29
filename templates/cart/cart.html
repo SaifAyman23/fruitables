@@ -37,7 +37,7 @@
                                 <td>
                                     <div class="input-group quantity mt-4" style="width: 100px;">
                                         <div class="input-group-btn">
-                                            <a href="{% url "shop:remove_item" item.id %}">
+                                            <a href="{% url "cart:remove_item" item.id %}">
                                                 <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
                                                     <i class="fa fa-minus"></i>
                                                 </button>
@@ -45,7 +45,7 @@
                                         </div>
                                         <div class="form-control form-control-sm text-center border-0 bg-transparent">{{item.quantity}}</div>
                                         <div class="input-group-btn">
-                                            <a href="{% url "shop:add_item" item.id %}">
+                                            <a href="{% url "cart:add_item" item.id %}">
                                                 <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
                                                     <i class="fa fa-plus"></i>
                                                 </button>
@@ -58,7 +58,7 @@
                                     <p class="mb-0 mt-4">{{item.total}} $</p>
                                 </td>
                                 <td>
-                                    <a href="{% url "shop:remove_cart" item.id %}">
+                                    <a href="{% url "cart:remove_cart" item.id %}">
                                         <button class="btn btn-md rounded-circle bg-light border mt-4" >
                                             <i class="fa fa-times text-danger"></i>
                                         </button>
@@ -82,7 +82,7 @@
                     </table>
                 </div>
                 <div class="mt-5">
-                    <form action="{% url "shop:cart" %}" method="POST">
+                    <form action="{% url "cart:cart" %}" method="POST">
                         {% csrf_token %}
                         <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code" name='coupon'>
                         <input class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="submit" value="Apply Coupon">

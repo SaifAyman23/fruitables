@@ -12,6 +12,11 @@ class OrderProduct(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
+    
+    def save(self,*args,**kwargs):
+        self.product.stock-=self.quantity
+        super(OrderProduct,self).save(*args, **kwargs)
     class Meta:
         verbose_name = ("Order Product")
         verbose_name_plural = ("Order Products")

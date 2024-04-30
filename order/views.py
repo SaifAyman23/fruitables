@@ -1,6 +1,10 @@
 from django.shortcuts import redirect, render
 from .models import *
 from cart.models import *
+import reportlab
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
 
 # Create your views here.
 

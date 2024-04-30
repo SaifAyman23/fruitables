@@ -2,10 +2,6 @@ from django.shortcuts import render,redirect
 from .models import *
 from django.core.paginator import Paginator
 from django.db.models import Q
-import reportlab
-import io
-from django.http import FileResponse
-from reportlab.pdfgen import canvas
 
 # Create your views here.
 def shop(request):
@@ -27,16 +23,12 @@ def shop_price(request):
     if request.method=="POST":
         prices=request.POST['amount']
         cat=Category.objects.all()
-        product=Product.objects.all().filter(price__lte=prices)
+        product=Product.objects.all().filter(price__lte=prices).order_by('-price')
         products=Product.objects.all().order_by('-offer')
-        p = Paginator(product, 6)
-        page_number=request.GET.get("page")
-        page_object=p.get_page(page_number)
         context={
             'category':cat,
             'products':products,
             'product':product,
-            'number':page_number,
         }
         return render(request,'shop/shop.html',context)
     

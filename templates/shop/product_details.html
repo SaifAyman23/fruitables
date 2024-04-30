@@ -37,7 +37,7 @@
                                 {% endif %}
                                 <p class="mb-4">{{product.description}}</p>
                                 <div class="input-group quantity mb-5" style="width: 100px;">
-                                    
+                                    {% if product.stock %}
                                     <form action="{% url "cart:add_cart" product.id %}" method="POST">
                                         {% csrf_token %}
                                         <input type="number" name="quantity" class="form-control form-control-sm text-center border-0" value="1">
@@ -45,7 +45,9 @@
                                         <input type="submit" class="btn border border-secondary rounded-pill px-4 py-2 my-4 text-primary" value="Add to cart">
                                         {% comment %} </a> {% endcomment %}
                                     </form>
-                                    
+                                    {% else %}
+                                    <p class="mb-3">Out of stock</p>
+                                    {% endif %}
                                 </div>
                                 
                             </div>

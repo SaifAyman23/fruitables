@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from shop.models import *
+from order.models import *
+from cart.models import *
 from rest_framework.authtoken.models import Token
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -12,9 +14,34 @@ class CategorySerializer(serializers.ModelSerializer):
         model=Category
         fields='__all__'
         
-class ReviewSerializer(serializers.ModelSerializer):
+class ReviewsSerializer(serializers.ModelSerializer):
     class Meta:
         model=Reviews
+        fields='__all__'
+        
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Cart
+        fields='__all__'
+        
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Order
+        fields='__all__'
+        
+class OrderProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=OrderProduct
+        fields='__all__'
+        
+class OfferSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Offer
+        fields='__all__'
+        
+class CouponSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Coupon
         fields='__all__'
         
 class UserSerializer(serializers.ModelSerializer):

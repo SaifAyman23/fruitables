@@ -30,12 +30,12 @@
         <link href="{% static "css/style.css" %}" rel="stylesheet">
     </head>
 
-    <body style="margin-top:15%">
+    <body style="margin-top:8%">
 
         {% include "includes/navbar.html" %}
         <div class="w-100 d-flex justify-content-center align-items-center">
 
-            <form action="{% url "accounts:edit_profile" %}"  method="POST" id="#form" class="my-5 p-xxl-5 card pt-4 px-5">
+            <form action="{% url "accounts:edit_profile" %}"  method="POST" id="#form" class="mt-5 p-xxl-5 card pt-4 px-5">
                 {{userForm}}
                 {{profileForm}}
                 {% csrf_token %}
